@@ -9,7 +9,7 @@ import Layout from "../components/Layout";
 const ProfileLink = (props) => (
   <div>
     <Link href={`/p/[profile]`} as={`/p/${props.profile}`}>
-      <a>Go to {props.name}'s profile</a>
+      <a>Go to {props.profile}'s profile</a>
     </Link>
   </div>
 );
@@ -18,9 +18,9 @@ const Index = () => {
   return (
     <Layout>
       <h1>Friends List</h1>
-      <ProfileLink name="jake" />
-      <ProfileLink name="peter" />
-      <ProfileLink name="yumi" />
+      <ProfileLink profile="jake" />
+      <ProfileLink profile="peter" />
+      <ProfileLink profile="yumi" />
     </Layout>
   );
 };
