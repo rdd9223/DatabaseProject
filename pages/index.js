@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Layout from "../components/Layout";
+import fetch from "isomorphic-unfetch";
 
 // Link의 href에 ?name= 이름 형태의 쿼리스트링을 넣어줬다.
 // <Link href={`/profile?name=${props.name}`}>
@@ -14,15 +15,32 @@ const ProfileLink = (props) => (
   </div>
 );
 
-const Index = () => {
+const Index = (props) => {
+  // return (
+  //   <Layout>
+  //     <h1>Friends List</h1>
+  //     <ProfileLink profile="jake" />
+  //     <ProfileLink profile="peter" />
+  //     <ProfileLink profile="yumi" />
+  //   </Layout>
+  // );
   return (
     <Layout>
-      <h1>Friends List</h1>
-      <ProfileLink profile="jake" />
-      <ProfileLink profile="peter" />
-      <ProfileLink profile="yumi" />
+      <h1>Friends List {props.profiles[0]}</h1>
+      {props.profiles.map((profile, index) => (
+        <ProfileLink key={index} profile={profile} />
+      ))}
     </Layout>
   );
+};
+
+Index.getInitialProps = async function () {
+  const res = await fetch("https://jsonplaceholder.typicode.com/users");
+  const data = await res.json();
+  console.log(data);
+  return {
+    profiles: data.map((profile) => profile.name),
+  };
 };
 
 export default Index;
